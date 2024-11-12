@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather App</title>
+  <!-- Подключение стилей -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Боковая панель с основной информацией о погоде -->
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <!-- Кнопка для использования геолокации -->
+        <button class="add-button" id="geolocation-button">🗺️</button>
+
+        <div class="settings-icons">
+          <!-- Переключение единиц измерения температуры (°C / °F) -->
+          <button id="unit-toggle" class="icon">°C / °F</button>
+          <span class="icon">☀️</span>
+        </div>
+      </div>
+
+      <!-- Основная информация о текущем местоположении и погоде -->
+      <div class="location-info">
+        <p class="city" id="city">New York, USA</p>
+        <p class="date" id="date">Today 28 Sept</p>
+        <div class="temp">
+          <span class="temp-value" id="current-temp">27°</span>
+          <span class="weather-desc" id="weather-desc">Sunny</span>
+        </div>
+        <div class="time-info">
+          <div class="sunrise" id="sunrise">Sunrise: 07:19</div>
+          <div class="sunset" id="sunset">Sunset: 19:32</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Основной контент приложения -->
+    <main class="main-content">
+      <section class="welcome-section">
+        <h1>Welcome back!</h1>
+        <p>Check out today’s weather information</p>
+        <!-- Поле поиска города -->
+        <div class="search-container">
+          <input type="text" id="search-input" placeholder="Search city..." autocomplete="on">
+        </div>
+      </section>
+
+      <!-- Прогноз погоды на ближайшие часы -->
+      <section class="forecast-section">
+        <h2>Upcoming hours</h2>
+        <div class="forecast-chart" id="hourly-forecast"></div>
+      </section>
+
+      <!-- Прогноз погоды на 5 дней -->
+      <section class="forecast-section">
+        <h2>5-Day Forecast</h2>
+        <div class="forecast-chart" id="five-day-forecast"></div>
+      </section>
+
+      <!-- Детали о погоде, такие как влажность, ветер и т.д. -->
+      <section class="details-section" id="details-section">
+        <div class="details-item">
+          <p>Humidity</p>
+          <p class="value" id="humidity">82%</p>
+        </div>
+        <div class="details-item">
+          <p>Wind</p>
+          <p class="value" id="wind-speed">8 km/h</p>
+        </div>
+        <div class="details-item">
+          <p>Precipitation</p>
+          <p class="value" id="precipitation">1.4 cm</p>
+        </div>
+        <div class="details-item">
+          <p>UV Index</p>
+          <p class="value" id="uv-index">4</p>
+        </div>
+        <div class="details-item">
+          <p>Feels like</p>
+          <p class="value" id="feels-like">30°</p>
+        </div>
+        <div class="details-item">
+          <p>Chance of rain</p>
+          <p class="value" id="rain-chance">42%</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

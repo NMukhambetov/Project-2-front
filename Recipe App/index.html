@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe App</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.1/css/boxicons.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="recipe_page">
+        <!-- Шапка приложения с названием и кратким описанием -->
+        <header>
+            <div class="header-content">
+                <h1>Recipe Finder</h1>
+                <p>Discover your favorite recipes in one click!</p>
+            </div>
+        </header>
+    
+        <div class="container">
+            <!-- Навигационная панель для переключения между страницами поиска и избранного -->
+            <nav id="navigation">
+                <button id="search_btn" onclick="showPage('search')">Search Recipes</button>
+                <button id="favorites_btn" onclick="showPage('favorites')">Favorites</button>
+            </nav>
+
+            <!-- Страница поиска рецептов -->
+            <section id="search-page">
+                <div id="search-container">
+                    <!-- Выпадающий список для выбора типа поиска: по названию блюда или ингредиентам -->
+                    <select id="search-type">
+                        <option value="name">Search by Dish Name</option>
+                        <option value="ingredients">Search by Ingredients</option>
+                    </select>
+                    <!-- Поле ввода для поиска рецептов, с автозаполнением -->
+                    <input type="text" id="search-input" placeholder="Enter dish name or ingredients...">
+                    <div id="suggestions" class="suggestions-box"></div>
+                    <!-- Кнопка поиска с иконкой -->
+                    <button id="search-button">
+                        <i class="bx bx-search"></i> Search
+                    </button>
+                </div>
+                <h2>Search Results</h2>
+                <!-- Сетка для отображения результатов поиска рецептов -->
+                <div id="recipe-grid" class="grid"></div>
+            </section>
+
+            <!-- Секция популярных рецептов -->
+            <section id="popular-recipes">
+                <h2>Popular Recipes</h2>
+                <div class="grid" id="popular-grids">
+            </section> 
+
+            <!-- Страница избранных рецептов, отображается только при выборе "Favorites" -->
+            <section id="favorites-page" style="display: none;">
+                <h2>Your Favorite Recipes</h2>
+                <div id="favorites-grid" class="grid"></div>
+            </section>
+        </div>
+    
+
+        <!-- Модальное окно для отображения подробной информации о рецепте -->
+        <div id="recipe-info" class="modal">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal()">&times;</span>
+                <div id="recipe-details"></div>
+            </div>
+        </div>
+    
+        <!-- Футер -->
+        <footer>
+            <p>Recipe App &copy; 2024 | Made with ❤️ by Nurtas Mukhambetov</p>
+        </footer>
+    </div>
+  
+    
+    <script src="script.js"></script>
+</body>
+</html>
