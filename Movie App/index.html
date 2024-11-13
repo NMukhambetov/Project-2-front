@@ -1,84 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Weather App</title>
-  <link rel="stylesheet" href="style.css">
+    <!-- Meta-данные страницы: кодировка и настройки для мобильных устройств -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Movies App</title>
 </head>
 <body>
-  <div class="app-container"> <!-- Основной контейнер для всего приложения -->
-   
-    <aside class="sidebar"> <!-- Боковая панель с информацией о текущем местоположении и кнопками -->
-      <div class="sidebar-top"> 
-        <button class="add-button" id="geolocation-button">🗺️</button> 
-        <div class="settings-icons"> <!-- Контейнер для кнопок настроек -->
-          <button id="unit-toggle" class="icon">°C / °F</button> 
-        </div>
-      </div>
-      
-      <div class="location-info"> <!-- Информация о текущем местоположении (город, дата, температура) -->
-        <p class="city" id="city">New York, USA</p> 
-        <p class="date" id="date">Today 28 Sept</p> 
-        <div class="temp"> <!-- Температура и описание погоды -->
-          <span class="temp-value" id="current-temp">27°</span> 
-          <span class="weather-desc" id="weather-desc">Sunny</span> 
-        </div>
-        <div class="time-info"> <!-- Время восхода и заката -->
-          <div class="sunrise" id="sunrise">Sunrise: 07:19</div> 
-          <div class="sunset" id="sunset">Sunset: 19:32</div> 
-        </div>
-      </div>
-    </aside>
+    
+    <!-- Заголовок и навигация -->
+    <header>
+        <!-- Кнопки навигации для переключения между страницами -->
+        <nav>
+            <button id="search-btn" onclick="showPage('search')">Search Page</button>
+            <button id="watchlist-btn" onclick="showPage('watchlist')">Watchlist</button>
+        </nav>
+        <!-- Поле для поиска фильма с функцией автозаполнения -->
+        <input type="text" id="search-bar" placeholder="Search for a movie..." oninput="handleAutoSuggest()">
+        <!-- Список подсказок, который появляется по мере ввода текста -->
+        <div id="suggestions"></div>
 
-    <main class="main-content"> <!-- Основная часть приложения с разделами -->
-      <section class="welcome-section"> 
-        <h1>Welcome back!</h1> 
-        <p>Check out today’s weather information</p> 
-        <div class="search-container"> <!-- Контейнер для поля ввода города -->
-          <input type="text" id="search-input" placeholder="Enter city name"> 
-        </div>
-      </section>
+        <!-- Выпадающий список для сортировки результатов -->
+        <select id="sort-select">
+            <option value="popularity.desc">Sort by Popularity</option>
+            <option value="release_date.desc">Sort by Release Date</option>
+            <option value="vote_average.desc">Sort by Rating</option>
+        </select>
+    </header>
 
-      <section class="forecast-section"> <!-- Раздел с прогнозом погоды на ближайшие часы -->
-        <h2>Upcoming hours</h2>
-        <div class="forecast-chart" id="hourly-forecast"></div> <!-- График прогноза погоды на ближайшие часы -->
-      </section>
-
-      <section class="forecast-section"> <!-- Раздел с прогнозом погоды на 5 дней -->
-        <h2>5-Day Forecast</h2>
-        <div class="forecast-chart" id="five-day-forecast"></div> <!-- График прогноза на 5 дней -->
-      </section>
-
-      <section class="details-section" id="details-section"> <!-- Раздел с подробной информацией о погоде -->
-        <div class="details-item">
-          <p>Humidity</p> 
-          <p class="value" id="humidity">82%</p> 
-        </div>
-        <div class="details-item">
-          <p>Wind</p> 
-          <p class="value" id="wind-speed">8 km/h</p> 
-        </div>
-        <div class="details-item">
-          <p>Precipitation</p> 
-          <p class="value" id="precipitation">1.4 cm</p> 
-        </div>
-        <div class="details-item">
-          <p>UV Index</p> 
-          <p class="value" id="uv-index">4</p> 
-        </div>
-        <div class="details-item">
-          <p>Feels like</p> 
-          <p class="value" id="feels-like">30°</p> 
-        </div>
-        <div class="details-item">
-          <p>Chance of rain</p> 
-          <p class="value" id="rain-chance">42%</p>
-        </div>
-      </section>
+    <!-- Основной контент страницы поиска -->
+    <main id="search-page">
+        <!-- Сетка для отображения результатов поиска (фильмов) -->
+        <div id="movies-grid"></div>
     </main>
-  </div>
 
-  <script src="script.js"></script> 
+    <!-- Индикатор загрузки (показывается при загрузке данных) -->
+    <div id="loader" class="loader" style="display: none;"></div>
+
+    <!-- Основной контент страницы списка желаемого (watchlist) -->
+    <main id="watchlist-page" style="display: none;">
+        <!-- Сетка для отображения фильмов в списке желаемого -->
+        <div id="watchlist-grid"></div>
+    </main>
+
+    <!-- Модальное окно для отображения подробной информации о фильме -->
+    <div id="movie-modal" class="modal">
+        <div class="modal-content">
+            <!-- Кнопка для закрытия модального окна -->
+            <span id="close-modal">&times;</span>
+            <!-- Информация о фильме -->
+            <div id="movie-details"></div>
+            <h3>Trailer:</h3>
+            <!-- Секция для показа трейлера фильма -->
+            <div id="movie-trailer"></div>
+            
+            <h3>Rate this Movie:</h3>
+            <!-- Система звездного рейтинга -->
+            <div id="star-rating">
+                <span class="star" data-value="1">&#9733;</span>
+                <span class="star" data-value="2">&#9733;</span>
+                <span class="star" data-value="3">&#9733;</span>
+                <span class="star" data-value="4">&#9733;</span>
+                <span class="star" data-value="5">&#9733;</span>
+            </div>
+        </div>
+    </div>    
+    
+    <!-- Футер -->
+    <footer>
+        <p>Movie App © 2024 | Made with ❤️ by Nurtas Mukhambetov.</p>
+    </footer>
+    <script src="script.js"></script>
 </body>
 </html>
